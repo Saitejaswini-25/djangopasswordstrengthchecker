@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Strength Checker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementsByName("password")[0];
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Strength Checker</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="password" name="password" placeholder="Enter your password" required>
+            <br>
+            <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
+            <br><br>
+            <button type="submit">Check Strength</button>
+        </form>
+        {% if strength %}
+            <p class="result">Password Strength: <strong>{{ strength }}</strong></p>
+        {% endif %}
+    </div>
+</body>
+</html>
