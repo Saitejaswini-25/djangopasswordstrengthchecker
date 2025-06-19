@@ -3,8 +3,6 @@
 <head>
     <title>Password Strength Checker</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'main.css' %}">
-
     <script>
         function togglePasswordVisibility() {
             const passwordInput = document.getElementsByName("password")[0];
@@ -12,20 +10,46 @@
         }
     </script>
 </head>
-<body>
-    <div class="container">
-        <h1>Password Strength Checker</h1>
+<body style="font-family: Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0;">
+
+    <div class="container" style="max-width: 400px; margin: 100px auto; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+        <h1 style="margin-bottom: 20px; color: #333;">Password Strength Checker</h1>
+
         <form method="POST">
             {% csrf_token %}
-            <input type="password" name="password" placeholder="Enter your password" required>
+            <input type="password" name="password" placeholder="Enter your password" required
+                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
             <br>
-            <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
+            <label style="font-size: 14px;">
+                <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password
+            </label>
             <br><br>
-            <button type="submit">Check Strength</button>
+            <button type="submit"
+                    style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Check Strength
+            </button>
         </form>
+
         {% if strength %}
-            <p class="result">Password Strength: <strong>{{ strength }}</strong></p>
+            {% if strength == "Weak" %}
+                <p class="result" style="margin-top: 20px; font-size: 16px; color: red;">
+                    Password Strength: <strong>{{ strength }}</strong>
+                </p>
+            {% elif strength == "Medium" %}
+                <p class="result" style="margin-top: 20px; font-size: 16px; color: orange;">
+                    Password Strength: <strong>{{ strength }}</strong>
+                </p>
+            {% elif strength == "Strong" %}
+                <p class="result" style="margin-top: 20px; font-size: 16px; color: green;">
+                    Password Strength: <strong>{{ strength }}</strong>
+                </p>
+            {% else %}
+                <p class="result" style="margin-top: 20px; font-size: 16px; color: #444;">
+                    Password Strength: <strong>{{ strength }}</strong>
+                </p>
+            {% endif %}
         {% endif %}
     </div>
+
 </body>
 </html>
